@@ -13,6 +13,7 @@ export class AsciiDotsBackground {
         this.menuHoverDuration = options.menuHoverDuration || 800; // Time in ms for full reveal
         this.menuInfluenceStrength = options.menuInfluenceStrength || 5; // Max influence strength
         this.border = options.border !== undefined ? options.border : true;
+        this.borderSize = options.borderSize !== undefined ? options.borderSize : 100;
         this.rippleSpacing = 20; // Min pixels between ripples while dragging
         this.menuRandStrength = 50;
         this.menuMargin = {x: 50, y: 20}
@@ -506,11 +507,11 @@ export class AsciiDotsBackground {
     }
 
     getScreenBorderInfluence(x, y, noise) {
-        if (!this.border) {
+        if (!this.border || this.borderSize < 2) {
             return 0;
         }
 
-        const margin = 100 + noise * 20;
+        const margin = this.borderSize + noise * 10;
 
         const distanceToLeft = x;
         const distanceToRight = this.canvas.width - x;
