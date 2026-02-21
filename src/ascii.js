@@ -152,22 +152,8 @@ export class AsciiDotsBackground {
             });
         });
 
-        let dividers = document.querySelectorAll('.divider');
-        this.regions = [
-            {
-                rect: document.querySelector('#love').getBoundingClientRect(),
-                strength: 0.5,
-                margin: 25
-            },
-        ];
-
-        for (const menuItem of this.menuItems) {
-            this.regions.push({
-                rect: menuItem.rect,
-                strength: 0.25,
-                margin: 10
-            });
-        }
+        this.regions = []
+        this.updateRegions();
 
         // Set up text rendering
         let grid = this.calculateGrid();
@@ -178,6 +164,17 @@ export class AsciiDotsBackground {
 
         // Set up parallel canvas
         this.atlasCanvas = this.createCharacterAtlas();
+    }
+
+    updateRegions() {
+        const influenceElements = document.querySelectorAll("[data-influence]");
+        for (const e of influenceElements) {
+            this.regions.push({
+                rect: e.getBoundingClientRect(),
+                strength: e.dataset.influence,
+                margin: e.dataset.influenceMargin
+            })
+        }
     }
 
     calculateGrid() {
