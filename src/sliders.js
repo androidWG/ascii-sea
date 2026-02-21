@@ -90,6 +90,7 @@ class Slider {
 
         window.addEventListener('resize', this.resizeCanvas);
         this.draw = this.draw.bind(this);
+        this.resizeCanvas = this.resizeCanvas.bind(this);
         this.slider.addEventListener("input", this.draw);
 
         this.resizeCanvas();
