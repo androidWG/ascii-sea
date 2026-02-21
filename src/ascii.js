@@ -545,6 +545,8 @@ export class AsciiDotsBackground {
     }
 
     processFrame() {
+        this.updateRegions();
+
         const currentTime = Date.now();
         this.time += this.animationSpeed * 0.05;
 
