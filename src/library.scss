@@ -1,0 +1,42 @@
+@use "sass:color";
+
+// -- spacing --------------
+$small-gap: 8px;
+$medium-gap: 12px;
+$gap: 16px;
+$big-gap: 8px;
+
+// -- colors ---------------
+$foreground: #fff;
+$foreground-dark: color.scale($foreground, $lightness: -50%);
+
+// -- text ---------------
+$header-font: "Jacquard 12", monospace;
+$subheader-font: "Jacquarda Bastarda 9", monospace;
+$paragraph-font: "Pixelify Sans", monospace;
+
+p, .text-micro {
+  font-size: 0.5rem;
+  font-family: $paragraph-font;
+  color: $foreground-dark;
+}
+
+h4, .text-small {
+  font-size: 0.7rem;
+  font-family: $paragraph-font;
+}
+
+h3, .text-medium {
+  font-size: 1rem;
+  font-family: $subheader-font;
+}
+
+h2, .text-large {
+  font-size: 2rem;
+  font-family: $header-font;
+}
+
+h1, .text-huge {
+  font-size: 4rem;
+  font-family: $header-font;
+}

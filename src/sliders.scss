@@ -1,0 +1,73 @@
+@use "library" as *;
+
+.slider {
+  display: flex;
+  user-select: none;
+  gap: $gap;
+
+  justify-content: left;
+  align-items: center;
+
+  position: relative;
+  height: 32px;
+
+  .inner {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    width: 200px;
+    height: inherit;
+
+    .tooltip {
+      display: block;
+      opacity: 0;
+      transition: opacity .5s;
+      z-index: 3;
+
+      background-color: black;
+      border: 1px dashed darkgray;
+
+      position: absolute;
+      top: -50px;
+      transform: translateX(-25px);
+      font-family: "Courier New", monospace;
+      font-size: 0.75rem;
+      text-align: center;
+      vertical-align: middle;
+      padding: $small-gap $medium-gap;
+    }
+
+    input[type="range"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      color: transparent;
+      cursor: pointer;
+      margin: 0;
+      z-index: 10;
+    }
+
+    canvas {
+      position: absolute;
+      height: inherit;
+      width: 200px;
+      z-index: 2;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      image-rendering: pixelated;
+    }
+  }
+
+  .handle {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+}

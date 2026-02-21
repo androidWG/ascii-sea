@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use 'variables' as *;
+@use 'library' as *;
 @use 'animations' as *;
 
 $corner-size: 0.7rem;
@@ -30,6 +30,7 @@ $corner-size: 0.7rem;
   margin: $gap $gap/2;
 
   .drawer-content {
+    display: flex;
     margin: $big-gap;
 
     .group {
@@ -98,11 +99,6 @@ $corner-size: 0.7rem;
 
 .open {
   transform: translateY(0%);
-
-  .drawer-content {
-    display: flex;
-    flex-direction: column;
-  }
 
   .arrow {
     animation: rotateDown 0.5s ease-in-out forwards;

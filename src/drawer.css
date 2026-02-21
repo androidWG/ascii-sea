@@ -1,3 +1,29 @@
+p, .text-micro {
+  font-size: 0.5rem;
+  font-family: "Pixelify Sans", monospace;
+  color: rgb(127.5, 127.5, 127.5);
+}
+
+h4, .text-small {
+  font-size: 0.7rem;
+  font-family: "Pixelify Sans", monospace;
+}
+
+h3, .text-medium {
+  font-size: 1rem;
+  font-family: "Jacquarda Bastarda 9", monospace;
+}
+
+h2, .text-large {
+  font-size: 2rem;
+  font-family: "Jacquard 12", monospace;
+}
+
+h1, .text-huge {
+  font-size: 4rem;
+  font-family: "Jacquard 12", monospace;
+}
+
 @keyframes fadeInOpacity {
   0% {
     opacity: 0;
@@ -53,6 +79,7 @@
   margin: 16px 8px;
 }
 .drawer .drawer-content {
+  display: flex;
   margin: 8px;
 }
 .drawer .drawer-content .group {
@@ -114,10 +141,6 @@
 
 .open {
   transform: translateY(0%);
-}
-.open .drawer-content {
-  display: flex;
-  flex-direction: column;
 }
 .open .arrow {
   animation: rotateDown 0.5s ease-in-out forwards;
