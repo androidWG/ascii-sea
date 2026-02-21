@@ -1,7 +1,7 @@
 p, .text-micro {
   font-size: 0.5rem;
   font-family: "Pixelify Sans", monospace;
-  color: rgb(127.5, 127.5, 127.5);
+  color: #999999;
 }
 
 h4, .text-small {
@@ -45,8 +45,8 @@ h1, .text-huge {
   opacity: 0;
   transition: opacity 0.5s;
   z-index: 3;
-  background-color: black;
-  border: 1px dashed darkgray;
+  background-color: #000;
+  border: 1px dashed #666666;
   position: absolute;
   top: -50px;
   transform: translateX(-25px);

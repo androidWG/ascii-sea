@@ -24,8 +24,8 @@
       transition: opacity .5s;
       z-index: 3;
 
-      background-color: black;
-      border: 1px dashed darkgray;
+      background-color: $background;
+      border: 1px dashed $foreground-darker;
 
       position: absolute;
       top: -50px;
