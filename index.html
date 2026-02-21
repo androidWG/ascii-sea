@@ -26,41 +26,51 @@
             === <span class="arrow">↑</span> parameters <span class="arrow">↑</span> ===
         </button>
         <div class="drawer-content">
-            <div class="slider" data-slider data-max-length="32">
-                <label for="density">density</label>
-                <div class="inner">
-                    <canvas></canvas>
-                    <input id="density" list="density-markers" type="range" min="0.5" max="4" step="0.05" value="1.25">
-                    <datalist id="density-markers">
-                        <option value="0.75"></option>
-                        <option value="1.0"></option>
-                        <option value="1.25"></option>
-                        <option value="1.5"></option>
-                        <option value="2.0"></option>
-                        <option value="3.5"></option>
-                    </datalist>
+            <div class="group">
+                <div class="corners">
+                    <span class="micro">+</span>
+                    <span class="micro">+</span>
+                    <span class="micro">+</span>
+                    <span class="micro">+</span>
                 </div>
-            </div>
-            <div class="slider" data-slider data-max-length="32">
-                <label for="speed">speed</label>
-                <div class="inner">
-                    <canvas></canvas>
-                    <input id="speed" type="range" min="0.15" max="5" step="0.05" value="0.5">
+                <p class="label micro">settings</p>
+                <div class="slider" data-slider data-max-length="32">
+                    <label for="density">density</label>
+                    <div class="inner">
+                        <canvas></canvas>
+                        <input id="density" list="density-markers" type="range" min="0.5" max="4" step="0.05"
+                               value="1.25">
+                        <datalist id="density-markers">
+                            <option value="0.75"></option>
+                            <option value="1.0"></option>
+                            <option value="1.25"></option>
+                            <option value="1.5"></option>
+                            <option value="2.0"></option>
+                            <option value="3.5"></option>
+                        </datalist>
+                    </div>
                 </div>
-            </div>
-            <div class="slider" data-slider data-max-length="32">
-                <label for="border">border</label>
-                <div class="inner">
-                    <canvas></canvas>
-                    <input id="border" list="border-markers" type="range" min="0" max="500" step="10" value="100">
-                    <datalist id="border-markers">
-                        <option value="0.75"></option>
-                        <option value="1.0"></option>
-                        <option value="1.25"></option>
-                        <option value="1.5"></option>
-                        <option value="2.0"></option>
-                        <option value="3.5"></option>
-                    </datalist>
+                <div class="slider" data-slider data-max-length="32">
+                    <label for="speed">speed</label>
+                    <div class="inner">
+                        <canvas></canvas>
+                        <input id="speed" type="range" min="0.15" max="5" step="0.05" value="0.5">
+                    </div>
+                </div>
+                <div class="slider" data-slider data-max-length="32">
+                    <label for="border">border</label>
+                    <div class="inner">
+                        <canvas></canvas>
+                        <input id="border" list="border-markers" type="range" min="0" max="500" step="10" value="100">
+                        <datalist id="border-markers">
+                            <option value="0.75"></option>
+                            <option value="1.0"></option>
+                            <option value="1.25"></option>
+                            <option value="1.5"></option>
+                            <option value="2.0"></option>
+                            <option value="3.5"></option>
+                        </datalist>
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,19 +98,11 @@
         influenceSize: 100,
         influenceStrength: 0.45,
         minInfluence: 4,
-        menuHoverDuration: 800,      // Time in ms for the blank area to fully reveal (default: 800ms)
-        menuInfluenceStrength: 2,     // Strength of the menu hover effect (default: 5)
+        menuHoverDuration: 800,
+        menuInfluenceStrength: 2,
         border: true,
-        startupDuration: 1,      // Total time for the startup animation (default: 2s)
+        startupDuration: 1,
     });
-
-    function updateAscii() {
-        console.log('updateAscii');
-        background.updateRegions();
-        setTimeout(updateAscii, 1000);
-    }
-
-    // updateAscii();
 
     const drawer = document.querySelector(".drawer");
 
@@ -121,7 +123,6 @@
     document.querySelector("#drawer-handle").addEventListener("click", (e) => {
         if (drawer.classList.contains("open")) {
             drawer.classList.remove("open");
-            background.updateRegions();
         } else {
             drawer.classList.add("open");
             buildAllSliders();
