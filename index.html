@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="src/style.sass">
     <link rel="stylesheet" type="text/css" href="src/animations.sass">
     <link rel="stylesheet" type="text/css" href="src/sliders.sass">
+    <link rel="stylesheet" type="text/css" href="src/drawer.scss">
 </head>
 <body>
 
@@ -20,51 +21,47 @@
 </div>
 
 <div class="content">
-    <div class="container topbar" data-influence data-strength="1">
-        <div class="slider" data-slider data-max-length="32" style="flex-grow: 1">
-            <label for="density">density</label>
-            <div class="inner">
-                <div class="tooltip">
-                    1
+    <div class="drawer" data-influence="0.5" data-influence-margin="50">
+        <button id="drawer-handle">
+            === <span class="arrow">↑</span> parameters <span class="arrow">↑</span> ===
+        </button>
+        <div class="drawer-content">
+            <div class="slider" data-slider data-max-length="32">
+                <label for="density">density</label>
+                <div class="inner">
+                    <canvas></canvas>
+                    <input id="density" list="density-markers" type="range" min="0.5" max="4" step="0.05" value="1.25">
+                    <datalist id="density-markers">
+                        <option value="0.75"></option>
+                        <option value="1.0"></option>
+                        <option value="1.25"></option>
+                        <option value="1.5"></option>
+                        <option value="2.0"></option>
+                        <option value="3.5"></option>
+                    </datalist>
                 </div>
-                <canvas></canvas>
-                <input id="density" list="density-markers" type="range" min="0.5" max="4" step="0.05" value="1.25">
-                <datalist id="density-markers">
-                    <option value="0.75"></option>
-                    <option value="1.0"></option>
-                    <option value="1.25"></option>
-                    <option value="1.5"></option>
-                    <option value="2.0"></option>
-                    <option value="3.5"></option>
-                </datalist>
             </div>
-        </div>
-        <div class="slider" data-slider data-max-length="32" style="flex-grow: 1">
-            <label for="speed">speed</label>
-            <div class="inner">
-                <div class="tooltip">
-                    1
+            <div class="slider" data-slider data-max-length="32">
+                <label for="speed">speed</label>
+                <div class="inner">
+                    <canvas></canvas>
+                    <input id="speed" type="range" min="0.15" max="5" step="0.05" value="0.5">
                 </div>
-                <canvas></canvas>
-                <input id="speed" type="range" min="0.15" max="5" step="0.05" value="0.5">
             </div>
-        </div>
-        <div class="slider" data-slider data-max-length="32" style="flex-grow: 1">
-            <label for="border">border</label>
-            <div class="inner">
-                <div class="tooltip">
-                    1
+            <div class="slider" data-slider data-max-length="32">
+                <label for="border">border</label>
+                <div class="inner">
+                    <canvas></canvas>
+                    <input id="border" list="border-markers" type="range" min="0" max="500" step="10" value="100">
+                    <datalist id="border-markers">
+                        <option value="0.75"></option>
+                        <option value="1.0"></option>
+                        <option value="1.25"></option>
+                        <option value="1.5"></option>
+                        <option value="2.0"></option>
+                        <option value="3.5"></option>
+                    </datalist>
                 </div>
-                <canvas></canvas>
-                <input id="border" list="border-markers" type="range" min="0" max="500" step="10" value="100">
-                <datalist id="border-markers">
-                    <option value="0.75"></option>
-                    <option value="1.0"></option>
-                    <option value="1.25"></option>
-                    <option value="1.5"></option>
-                    <option value="2.0"></option>
-                    <option value="3.5"></option>
-                </datalist>
             </div>
         </div>
     </div>
@@ -81,7 +78,7 @@
     import {AsciiDotsBackground} from "./src/ascii.js";
     import {buildAllSliders} from "./src/sliders.js";
 
-    const asciiBackground = new AsciiDotsBackground({
+    const background = new AsciiDotsBackground({
         targetFps: 24,
         backgroundColor: '#000000',
         textColor: '250, 250, 250',
@@ -94,23 +91,42 @@
         menuHoverDuration: 800,      // Time in ms for the blank area to fully reveal (default: 800ms)
         menuInfluenceStrength: 2,     // Strength of the menu hover effect (default: 5)
         border: true,
-        startupDuration: 10,      // Total time for the startup animation (default: 2s)
+        startupDuration: 1,      // Total time for the startup animation (default: 2s)
     });
 
-    buildAllSliders();
+    function updateAscii() {
+        console.log('updateAscii');
+        background.updateRegions();
+        setTimeout(updateAscii, 1000);
+    }
+
+    // updateAscii();
+
+    const drawer = document.querySelector(".drawer");
 
     document.querySelector("#density").addEventListener("input", (e) => {
-        asciiBackground.density = parseFloat(e.target.value);
-        asciiBackground.calculateGrid();
-        asciiBackground.prepare();
+        background.density = parseFloat(e.target.value);
+        background.calculateGrid();
+        background.prepare();
     });
 
     document.querySelector("#speed").addEventListener("input", (e) => {
-        asciiBackground.animationSpeed = parseFloat(e.target.value);
+        background.animationSpeed = parseFloat(e.target.value);
     });
 
     document.querySelector("#border").addEventListener("input", (e) => {
-        asciiBackground.borderSize = parseFloat(e.target.value);
+        background.borderSize = parseFloat(e.target.value);
+    })
+
+    document.querySelector("#drawer-handle").addEventListener("click", (e) => {
+        if (drawer.classList.contains("open")) {
+            drawer.classList.remove("open");
+            background.updateRegions();
+        } else {
+            drawer.classList.add("open");
+            buildAllSliders();
+            background.updateRegions();
+        }
     })
 </script>
 

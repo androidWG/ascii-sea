@@ -8,9 +8,6 @@ html, body {
 
 body {
   height: 100vh;
-}
-
-* {
   margin: 0;
   padding: 0;
 }
@@ -43,12 +40,6 @@ body {
 .centered h1 {
   font-family: "Jacquard 12", monospace;
   font-size: 3rem;
-}
-
-.topbar {
-  position: absolute;
-  display: flex;
-  bottom: 0;
 }
 
 .container {

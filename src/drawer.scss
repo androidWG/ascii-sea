@@ -1,0 +1,53 @@
+@use 'variables' as *;
+@use 'animations' as *;
+
+.arrow {
+  display: inline-block;
+  animation: rotateUp 0.5s forwards ease-in-out;
+}
+
+.drawer {
+  position: fixed;
+  height: auto;
+  overflow: hidden;
+  z-index: 5;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  pointer-events: auto;
+
+  width: 100%;
+  bottom: 0;
+  margin: $gap $gap/2;
+
+  .drawer-content {
+    display: none;
+    margin: $big-gap;
+  }
+}
+
+#drawer-handle {
+  all: unset;
+  cursor: pointer;
+
+  font-size: 0.8rem;
+  color: darkgrey;
+  width: fit-content;
+  z-index: 100;
+}
+
+.open {
+  height: auto;
+
+  .drawer-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .arrow {
+    animation: rotateDown 0.5s ease-in-out forwards;
+  }
+}

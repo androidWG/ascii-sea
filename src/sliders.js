@@ -1,3 +1,65 @@
+class Tooltip {
+    APPEAR_DELAY = 1000;
+    DISAPPEAR_DELAY = 200;
+
+    appearTimeout;
+    disappearTimeout;
+
+    constructor(element) {
+        this.tooltip = document.createElement("div");
+        this.tooltip.classList.add("tooltip");
+
+        element.parentElement.appendChild(this.tooltip);
+
+        this.slider = element;
+
+        this.handleMouseLeave = this.handleMouseLeave.bind(this);
+        this.handleMouseEnter = this.handleMouseEnter.bind(this);
+        this.update = this.update.bind(this);
+
+        this.slider.addEventListener("input", this.update);
+        this.slider.addEventListener("mouseleave", this.handleMouseLeave);
+        this.slider.addEventListener("mouseenter", this.handleMouseEnter);
+
+        this.update()
+    }
+
+    handleMouseEnter() {
+        if (this.disappearTimeout) {
+            clearTimeout(this.disappearTimeout);
+        }
+
+        if (!this.appearTimeout) {
+            this.appearTimeout = setTimeout(() => {
+                this.tooltip.style.opacity = "100%";
+                this.appearTimeout = null;
+            }, this.APPEAR_DELAY);
+        }
+    }
+
+    handleMouseLeave() {
+        this.disappearTimeout = setTimeout(() => {
+            this.tooltip.style.opacity = "0";
+            this.disappearTimeout = null;
+        }, this.DISAPPEAR_DELAY);
+
+        if (this.appearTimeout) {
+            clearTimeout(this.appearTimeout);
+        }
+    }
+
+    update() {
+        const value = this.slider.value;
+        const max = this.slider.max;
+        const min = this.slider.min;
+
+        const percent = ((value - min) / (max - min)) * 100;
+
+        this.tooltip.textContent = `${parseFloat(value).toFixed(2)}`;
+        this.tooltip.style.left = `${percent}%`;
+    }
+}
+
 class Slider {
     TRACK_CHAR = "="
     ENDS_CHAR = "|"
@@ -6,6 +68,9 @@ class Slider {
     TRACK_COLOR   = '#ffffff';
     SHADOW_COLOR  = '#838383';
     SCALE = 0.6;
+
+    block = false;
+    tooltip;
 
     constructor(canvas, slider) {
         this.canvas = canvas;
@@ -21,8 +86,13 @@ class Slider {
         handleImage.src = '/handle.png';
         this.handleImage = handleImage;
 
+        this.tooltip = new Tooltip(slider)
+
         window.addEventListener('resize', this.resizeCanvas);
-        this.resizeCanvas(); // run once on load
+        this.draw = this.draw.bind(this);
+        this.slider.addEventListener("input", this.draw);
+
+        this.resizeCanvas();
     }
 
     resizeCanvas() {
@@ -32,7 +102,11 @@ class Slider {
         this.draw(+this.slider.value);
     }
 
-    draw(value) {
+    draw() {
+        if (this.block) return;
+
+        const value = this.slider.value;
+
         const W = this.canvas.width;
         const H = this.canvas.height;
         const min = +this.slider.min;
@@ -92,25 +166,9 @@ class Slider {
 let sliderObjects = []
 
 export function buildAllSliders() {
+    if (sliderObjects.length >= 1) return;
+
     const sliders = document.querySelectorAll("[data-slider]");
-
-    function updateTooltip(input, tooltip) {
-        const value = input.value;
-        const max = input.max;
-        const min = input.min;
-
-        const percent = ((value - min) / (max - min)) * 100;
-
-        tooltip.textContent = `${parseFloat(value).toFixed(2)}`;
-        tooltip.style.left = `${percent}%`;
-    }
-
-    function removeTooltip(input, tooltip) {
-        const delay = 500
-        return setTimeout(() => {
-            tooltip.style.opacity = "0";
-        }, delay);
-    }
 
     sliders.forEach((slider) => {
         console.debug(`Found slider ${slider}`);
@@ -121,25 +179,13 @@ export function buildAllSliders() {
 
         const obj = new Slider(trackCanvas, input);
         sliderObjects.push(obj);
-
-        input.addEventListener("input", (e) => {
-            obj.draw(e.target.value);
-            updateTooltip(input, tooltip);
-        })
-
-        const tooltip = slider.querySelector(".tooltip");
-        input.addEventListener("mouseenter", (e) => {
-            if (tooltip.timeout) {
-                clearTimeout(tooltip.timeout);
-            }
-            tooltip.style.opacity = "100%";
-        });
-
-        input.addEventListener("mouseleave", (e) => {
-            tooltip.timeout = removeTooltip(input, tooltip);
-        });
-
-        updateTooltip(input, tooltip);
     });
 }
 
+export function resizeSliders() {
+    sliderObjects.forEach(slider => {
+        console.log(`Redrawing slider ${slider.value}`);
+        slider.resizeCanvas();
+        slider.draw();
+    })
+}

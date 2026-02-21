@@ -1,3 +1,5 @@
+@use 'variables' as *
+
 html, body
     overflow-x: hidden
     overflow-y: hidden
@@ -7,12 +9,8 @@ html, body
 
 body
     height: 100vh
-
-* 
     margin: 0
     padding: 0
-
-$spacing: 16px
 
 #ascii-background
     position: fixed
@@ -42,19 +40,14 @@ $spacing: 16px
         font-family: "Jacquard 12", monospace
         font-size: 3rem
 
-.topbar
-    position: absolute
-    display: flex
-    bottom: 0
-
 .container 
     display: flex
     flex-direction: row
     justify-content: center
     align-items: center
 
-    gap: $spacing
-    padding: $spacing
+    gap: $gap
+    padding: $gap
 
     font-size: 1.5rem
 
@@ -62,5 +55,5 @@ $spacing: 16px
 .divider 
     font-family: "Courier New", Courier, monospace
     font-style: normal
-    font-size: min(max(2vmin, 10px), $spacing)
+    font-size: min(max(2vmin, 10px), $gap)
     user-select: none

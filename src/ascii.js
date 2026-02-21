@@ -16,7 +16,8 @@ export class AsciiDotsBackground {
         this.borderSize = options.borderSize !== undefined ? options.borderSize : 100;
         this.rippleSpacing = 20; // Min pixels between ripples while dragging
         this.menuRandStrength = 50;
-        this.menuMargin = {x: 50, y: 20}
+        this.menuMargin = {x: 50, y: 20};
+        this.opacity = options.opacity !== undefined ? options.opacity : 0.75;
 
         // Canvas and container setup
         this.container = document.getElementById('ascii-background');
@@ -153,7 +154,6 @@ export class AsciiDotsBackground {
             });
         });
 
-        this.regions = []
         this.updateRegions();
 
         // Set up text rendering
@@ -168,6 +168,8 @@ export class AsciiDotsBackground {
     }
 
     updateRegions() {
+        this.regions = [];
+
         const influenceElements = document.querySelectorAll("[data-influence]");
         for (const e of influenceElements) {
             this.regions.push({
@@ -304,6 +306,7 @@ export class AsciiDotsBackground {
 
     handleMouseDown(e) {
         const activeElement = document.activeElement;
+        console.log(activeElement.localName);
         if (activeElement.localName !== "body") return;
 
         this.mouse.isDown = true;
@@ -631,7 +634,7 @@ export class AsciiDotsBackground {
                     const clampedIndex = Math.min(this.CHARS.length - 1, Math.max(0, charIndex));
 
                     // Calculate opacity based on wave value
-                    let opacity = Math.min(1, Math.max(0.3, 0.4 + normalizedValue * 0.1));
+                    let opacity = Math.min(1, Math.max(0.3, 0.4 + normalizedValue)) * this.opacity;
                     opacity -= menuHoverInfluence * 0.15;
                     opacity -= borderInfluence * 0.1;
 
