@@ -86,7 +86,7 @@
 
 <script type="module">
     import {AsciiDotsBackground} from "./src/ascii.js";
-    import {buildAllSliders} from "./src/sliders.js";
+    import {buildAllSliders, resizeSliders} from "./src/sliders.js";
 
     const background = new AsciiDotsBackground({
         targetFps: 24,
@@ -106,22 +106,32 @@
 
     buildAllSliders();
 
-    const drawer = document.querySelector(".drawer");
+    function addSlider(id, target, extra = null) {
+        const slider = document.querySelector(`#${id}`);
+        // Update target immediately with last used value from slider
+        background[target] = parseFloat(slider.value);
 
-    document.querySelector("#density").addEventListener("input", (e) => {
-        background.density = parseFloat(e.target.value);
+        slider.addEventListener("input", (e) => {
+            background[target] = parseFloat(e.target.value);
+            if (extra) {
+                extra();
+            }
+        });
+    }
+
+    window.addEventListener("resize", resizeSliders);
+
+    addSlider("density", "density", () => {
         background.calculateGrid();
         background.prepare();
     });
 
-    document.querySelector("#speed").addEventListener("input", (e) => {
-        background.animationSpeed = parseFloat(e.target.value);
-    });
+    addSlider("speed", "animationSpeed");
+    addSlider("border", "borderSize");
+    addSlider("fps", "targetFps");
+    addSlider("opacity", "opacity");
 
-    document.querySelector("#border").addEventListener("input", (e) => {
-        background.borderSize = parseFloat(e.target.value);
-    })
-
+    const drawer = document.querySelector(".drawer");
     document.querySelector("#drawer-handle").addEventListener("click", (e) => {
         if (drawer.classList.contains("open")) {
             drawer.classList.remove("open");
