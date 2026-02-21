@@ -148,7 +148,7 @@ class Slider {
         this.ctx.textBaseline = 'middle';
 
 
-        const {charW, charCount} = this.getLength(trackLen, trackLeft);
+        const {charW, charCount} = this.getLength(trackLen);
         const innerLen = charCount * charW;
         const innerLeft = trackLeft + (trackLen - innerLen) / 2;
 
@@ -175,7 +175,7 @@ class Slider {
         this.ctx.drawImage(this.handleImage, handleX, handleY, this.HANDLE_W, this.HANDLE_H);
     }
 
-    getLength(trackLen, trackLeft) {
+    getLength(trackLen) {
         const charW = this.ctx.measureText(this.TRACK_CHAR).width;
         const charCount = Math.floor(trackLen / charW);
 
