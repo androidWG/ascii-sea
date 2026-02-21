@@ -20,7 +20,7 @@
 </div>
 
 <div class="content">
-    <div class="container topbar" data-influence data-strength="0.75">
+    <div class="container topbar" data-influence data-strength="1">
         <div class="slider" data-slider data-max-length="32" style="flex-grow: 1">
             <label for="density">density</label>
             <div class="inner">
@@ -49,7 +49,26 @@
                 <input id="speed" type="range" min="0.15" max="5" step="0.05" value="0.5">
             </div>
         </div>
+        <div class="slider" data-slider data-max-length="32" style="flex-grow: 1">
+            <label for="border">border</label>
+            <div class="inner">
+                <div class="tooltip">
+                    1
+                </div>
+                <canvas></canvas>
+                <input id="border" list="border-markers" type="range" min="0.5" max="4" step="0.05" value="1.25">
+                <datalist id="border-markers">
+                    <option value="0.75"></option>
+                    <option value="1.0"></option>
+                    <option value="1.25"></option>
+                    <option value="1.5"></option>
+                    <option value="2.0"></option>
+                    <option value="3.5"></option>
+                </datalist>
+            </div>
+        </div>
     </div>
+
     <div class="container centered">
         <h1 id="love" data-influence="0.8" data-influence-margin="25" >i love ascii</h1>
     </div>
