@@ -31,7 +31,7 @@ class Tooltip {
         this.appearTimeout = null;
     }
 
-    disappear () {
+    disappear() {
         this.tooltip.style.opacity = "0";
         this.disappearTimeout = null;
     }
@@ -72,8 +72,8 @@ class Slider {
     ENDS_CHAR = "|"
     HANDLE_W = 32; //px
     HANDLE_H = 32; //px
-    TRACK_COLOR   = '#ffffff';
-    SHADOW_COLOR  = '#838383';
+    TRACK_COLOR = '#ffffff';
+    SHADOW_COLOR = '#838383';
     SCALE = 0.6;
 
     tooltip;
@@ -86,8 +86,8 @@ class Slider {
 
         const handleImage = new Image();
         handleImage.onload = () => {
-            this.HANDLE_W = handleImage.naturalWidth  * this.SCALE;
-            this.HANDLE_H = handleImage.naturalHeight  * this.SCALE;
+            this.HANDLE_W = handleImage.naturalWidth * this.SCALE;
+            this.HANDLE_H = handleImage.naturalHeight * this.SCALE;
             this.draw(+slider.value);
         };
         handleImage.src = '/handle.png';
@@ -96,21 +96,26 @@ class Slider {
         this.lastValue = this.slider.value;
         this.tooltip = new Tooltip(slider);
 
-        window.addEventListener('resize', this.resizeCanvas);
+        window.addEventListener('resize', this.resize);
         this.draw = this.draw.bind(this);
         this.update = this.update.bind(this);
-        this.resizeCanvas = this.resizeCanvas.bind(this);
+        this.resize = this.resize.bind(this);
         this.slider.addEventListener("input", this.update);
 
-        this.resizeCanvas();
+        this.resize();
         this.draw()
     }
 
-    resizeCanvas() {
+    resize() {
+        if (!this.canvas) return;
         const rect = this.canvas.parentElement.getBoundingClientRect();
-        this.canvas.width  = rect.width;   // updates the drawing buffer
+
+        this.slider.width = rect.width;
+        this.canvas.style.width = `${rect.width}px`;
+
+        this.canvas.width = rect.width;   // updates the drawing buffer
         this.canvas.height = rect.height;
-        this.draw(+this.slider.value);
+        this.draw(this.slider.value);
     }
 
     update() {
@@ -199,8 +204,7 @@ export function buildAllSliders() {
 
 export function resizeSliders() {
     sliderObjects.forEach(slider => {
-        console.log(`Redrawing slider ${slider.value}`);
-        slider.resizeCanvas();
+        slider.resize();
         slider.draw();
     })
 }

@@ -1,7 +1,7 @@
 p, .text-micro {
   font-size: 0.5rem;
   font-family: "Pixelify Sans", monospace;
-  color: rgb(127.5, 127.5, 127.5);
+  color: #999999;
 }
 
 h4, .text-small {
@@ -26,7 +26,6 @@ h1, .text-huge {
 
 html,
 body {
-  overflow-x: hidden;
   overflow-y: hidden;
   color: #fff;
   font-family: "Jacquarda Bastarda 9", monospace;
@@ -37,6 +36,12 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 #ascii-background {
@@ -63,10 +68,6 @@ body {
 
 .centered {
   height: 100vh;
-}
-.centered h1 {
-  font-family: "Jacquard 12", monospace;
-  font-size: 3rem;
 }
 
 .container {
