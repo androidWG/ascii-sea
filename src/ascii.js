@@ -153,28 +153,13 @@ export class AsciiDotsBackground {
         });
 
         let dividers = document.querySelectorAll('.divider');
-        // this.regions = [
-        //     {
-        //         rect: document.querySelector('#logo').getBoundingClientRect(),
-        //         strength: 0.75,
-        //         margin: 25
-        //     },
-        //     {
-        //         rect: dividers.item(0).getBoundingClientRect(),
-        //         strength: 0.8,
-        //         margin: 5
-        //     },
-        //     {
-        //         rect: dividers.item(1).getBoundingClientRect(),
-        //         strength: 0.8,
-        //         margin: 5
-        //     },
-        //     {
-        //         rect: document.querySelector("#footer-icon").getBoundingClientRect(),
-        //         strength: 1,
-        //         margin: 8
-        //     }
-        // ];
+        this.regions = [
+            {
+                rect: document.querySelector('#love').getBoundingClientRect(),
+                strength: 0.5,
+                margin: 25
+            },
+        ];
 
         for (const menuItem of this.menuItems) {
             this.regions.push({

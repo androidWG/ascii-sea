@@ -32,8 +32,16 @@ body {
 .content {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
+  height: 100vh;
   user-select: none;
+}
+
+.centered {
+  height: 100vh;
+}
+.centered h1 {
+  font-family: "Jacquard 12", monospace;
+  font-size: 4rem;
 }
 
 .topbar {
