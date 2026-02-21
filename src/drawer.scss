@@ -1,16 +1,17 @@
-@use 'sass:math';
+@use 'sass:color';
 @use 'library' as *;
 @use 'animations' as *;
 
 $corner-size: 0.7rem;
 
-.arrow {
+span.arrow {
   display: inline-block;
   animation: rotateUp 0.5s forwards ease-in-out;
 }
 
 .drawer {
   position: fixed;
+  bottom: 0;
   height: auto;
   overflow: hidden;
   z-index: 5;
@@ -20,31 +21,38 @@ $corner-size: 0.7rem;
   align-items: center;
   flex-direction: column;
   transform: translateY(90%);
-  transition: transform 1s cubic-bezier(.25,.8,.25,1);
+  transition: transform 1s cubic-bezier(.25, .8, .25, 1);
   gap: $gap;
 
   pointer-events: auto;
 
-  width: 100%;
-  bottom: 0;
-  margin: $gap $gap/2;
+  width: calc(100% - $gap * 2); /* for some reason it needs the margin to be subtracted to be proper width */
+  margin: $gap;
 
   .drawer-content {
     display: flex;
-    margin: $big-gap;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin: $medium-gap $big-gap;
+    width: 100%;
 
     .group {
       position: relative;
-      border: dashed rgba(255, 255, 255, 0.5) 1px;
+      border: dashed $foreground-darker 1px;
       padding: $medium-gap $gap;
+      width: auto;
+      max-width: 300px;
+      min-width: 225px;
+
+      background-color: color.change($background, $alpha: 0);
+      backdrop-filter: blur(2px);
 
       .label {
         position: absolute;
         padding: 4px;
         margin: 0;
         top: -0.9em;
-        color: darkgrey;
-        background: black;
+        background: $background;
       }
 
       .corners {
@@ -58,26 +66,29 @@ $corner-size: 0.7rem;
       span {
         font-size: $corner-size;
         line-height: $corner-size;
+        color: $foreground-darker;
         width: $corner-size;
         text-align: center;
         position: absolute;
         margin: 0;
-        background: black;
-        color: darkgrey;
-        border: solid 1px black;
+        background: $background;
+        border: solid 1px $background;
 
         &:nth-child(1) {
           top: -$corner-size / 2;
           left: -$corner-size / 2;
         }
+
         &:nth-child(2) {
           top: -$corner-size / 2;
           right: -$corner-size / 2;
         }
+
         &:nth-child(3) {
           bottom: -$corner-size / 2;
           left: -$corner-size / 2;
         }
+
         &:nth-child(4) {
           bottom: -$corner-size / 2;
           right: -$corner-size / 2;
@@ -92,7 +103,7 @@ $corner-size: 0.7rem;
   cursor: pointer;
 
   font-size: 0.8rem;
-  color: darkgrey;
+  color: $foreground-dark;
   width: fit-content;
   z-index: 100;
 }
