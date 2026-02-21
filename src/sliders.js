@@ -2,8 +2,8 @@ class Tooltip {
     APPEAR_DELAY = 1000;
     DISAPPEAR_DELAY = 200;
 
-    appearTimeout;
-    disappearTimeout;
+    appearTimeout = null;
+    disappearTimeout = null;
 
     constructor(element) {
         this.tooltip = document.createElement("div");
@@ -16,32 +16,39 @@ class Tooltip {
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
         this.handleMouseEnter = this.handleMouseEnter.bind(this);
         this.update = this.update.bind(this);
+        this.appear = this.appear.bind(this);
+        this.disappear = this.disappear.bind(this);
 
         this.slider.addEventListener("input", this.update);
         this.slider.addEventListener("mouseleave", this.handleMouseLeave);
         this.slider.addEventListener("mouseenter", this.handleMouseEnter);
 
-        this.update()
+        this.update();
+    }
+
+    appear() {
+        this.tooltip.style.opacity = "100%";
+        this.appearTimeout = null;
+    }
+
+    disappear () {
+        this.tooltip.style.opacity = "0";
+        this.disappearTimeout = null;
     }
 
     handleMouseEnter() {
         if (this.disappearTimeout) {
             clearTimeout(this.disappearTimeout);
+            return;
         }
 
         if (!this.appearTimeout) {
-            this.appearTimeout = setTimeout(() => {
-                this.tooltip.style.opacity = "100%";
-                this.appearTimeout = null;
-            }, this.APPEAR_DELAY);
+            this.appearTimeout = setTimeout(this.appear, this.APPEAR_DELAY);
         }
     }
 
     handleMouseLeave() {
-        this.disappearTimeout = setTimeout(() => {
-            this.tooltip.style.opacity = "0";
-            this.disappearTimeout = null;
-        }, this.DISAPPEAR_DELAY);
+        this.disappearTimeout = setTimeout(this.disappear, this.DISAPPEAR_DELAY);
 
         if (this.appearTimeout) {
             clearTimeout(this.appearTimeout);
@@ -69,8 +76,8 @@ class Slider {
     SHADOW_COLOR  = '#838383';
     SCALE = 0.6;
 
-    block = false;
     tooltip;
+    lastValue;
 
     constructor(canvas, slider) {
         this.canvas = canvas;
@@ -86,14 +93,17 @@ class Slider {
         handleImage.src = '/handle.png';
         this.handleImage = handleImage;
 
-        this.tooltip = new Tooltip(slider)
+        this.lastValue = this.slider.value;
+        this.tooltip = new Tooltip(slider);
 
         window.addEventListener('resize', this.resizeCanvas);
         this.draw = this.draw.bind(this);
+        this.update = this.update.bind(this);
         this.resizeCanvas = this.resizeCanvas.bind(this);
-        this.slider.addEventListener("input", this.draw);
+        this.slider.addEventListener("input", this.update);
 
         this.resizeCanvas();
+        this.draw()
     }
 
     resizeCanvas() {
@@ -103,11 +113,15 @@ class Slider {
         this.draw(+this.slider.value);
     }
 
-    draw() {
-        if (this.block) return;
-
+    update() {
         const value = this.slider.value;
+        if (this.lastValue === value) return;
 
+        this.tooltip.appear();
+        this.draw(value);
+    }
+
+    draw(value) {
         const W = this.canvas.width;
         const H = this.canvas.height;
         const min = +this.slider.min;

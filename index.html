@@ -104,6 +104,8 @@
         startupDuration: 1,
     });
 
+    buildAllSliders();
+
     const drawer = document.querySelector(".drawer");
 
     document.querySelector("#density").addEventListener("input", (e) => {
@@ -125,7 +127,6 @@
             drawer.classList.remove("open");
         } else {
             drawer.classList.add("open");
-            buildAllSliders();
             background.updateRegions();
         }
     })
