@@ -1,0 +1,64 @@
+.slider {
+  display: flex;
+  user-select: none;
+  font-size: 1rem;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 256px;
+  height: 32px;
+}
+.slider .inner {
+  position: relative;
+  display: flex;
+  width: 200px;
+  height: inherit;
+}
+.slider .inner .tooltip {
+  display: block;
+  opacity: 0;
+  transition: opacity 0.5s;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  border: solid 1px rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  position: absolute;
+  width: 50px;
+  top: -50px;
+  transform: translateX(-25px);
+  font-family: "Courier New", monospace;
+  text-align: center;
+  vertical-align: middle;
+  padding: 8px 12px;
+}
+.slider .inner input[type=range] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 5%;
+  cursor: pointer;
+  margin: 0;
+}
+.slider .inner canvas {
+  position: absolute;
+  height: inherit;
+  width: 200px;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+.slider .handle {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  filter: drop-shadow(2px 0 0 #000) drop-shadow(0 2px 0 #000) drop-shadow(-2px 0 0 #000) drop-shadow(-2px 0 #000);
+}
+
+/*# sourceMappingURL=sliders.css.map */
